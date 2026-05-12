@@ -5,10 +5,11 @@ export const createFlyer = async (config: {
   business: any;
   intent: string;
   topic: string;
+  emotion: string;
 }) => {
-  const { business, intent, topic } = config;
+  const { business, intent, topic, emotion } = config;
 
-  const prompt = `Premium minimalist Apple-style marketing flyer for ${business.name}. Industry: ${business.industry}. Topic: ${topic}. High-end studio lighting, 8k resolution, professional photography.`;
+  const prompt = `Premium minimalist Apple-style marketing flyer for ${business.name}. Industry: ${business.industry}. Topic: ${topic}. Emotion: ${emotion} Intent: ${intent}. High-end studio lighting, 8k resolution, professional photography.`;
 
   try {
     // 1. Call Hugging Face Flux (Free)

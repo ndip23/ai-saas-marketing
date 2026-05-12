@@ -5,8 +5,12 @@ import { prisma } from '../lib/prisma'; // Assuming prisma client is exported he
 import { AppError } from '../utils/appError';
 
 const signToken = (id: string) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '1d',
+  // We explicitly cast the secret and options to satisfy TypeScript
+  const secret = process.env.JWT_SECRET as string;
+  const expiresIn = (process.env.JWT_EXPIRES_IN || '1d') as any;
+
+  return jwt.sign({ id }, secret, {
+    expiresIn: expiresIn,
   });
 };
 
