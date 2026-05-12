@@ -1,0 +1,97 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String
+  business  Business?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Business {
+  id               String             @id @default(cuid())
+  userId           String             @unique
+  user             User               @relation(fields: [userId], references: [id])
+  name             String
+  description      String?            @db.Text
+  industry         String?
+  location         String?
+  website          String?
+  logoUrl          String?
+  brandColors      String[]
+  socialLinks      Json?
+  services         String[]
+  content          GeneratedContent[]
+  aiMemory         AIMemory?
+  customerInsights CustomerInsight[]
+  schedules        Schedule[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model GeneratedContent {
+  id         String     @id @default(cuid())
+  businessId String
+  business   Business   @relation(fields: [businessId], references: [id])
+  platform   String
+  mode       String
+  topic      String
+  content    Json
+  imageUrl   String?
+  schedules  Schedule[]
+  createdAt  DateTime   @default(now())
+}
+
+model AIMemory {
+  id                String   @id @default(cuid())
+  businessId        String   @unique
+  business          Business @relation(fields: [businessId], references: [id])
+  preferredTone     String   @default("Professional")
+  bannedWords       String[]
+  frequentlyUsed    String[]
+  avgSentenceLength String   @default("Medium")
+  humorScore        Float    @default(0.5)
+  emojiDensity      Float    @default(0.3)
+  learnedStyle      Json?
+  lastUpdated       DateTime @updatedAt
+}
+
+model CustomerInsight {
+  id         String   @id @default(cuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id])
+  sourceType String
+  rawContent String   @db.Text
+  painPoints String[]
+  sentiment  String?
+  createdAt  DateTime @default(now())
+}
+
+model Schedule {
+  id           String           @id @default(cuid())
+  businessId   String
+  business     Business         @relation(fields: [businessId], references: [id])
+  contentId    String
+  content      GeneratedContent @relation(fields: [contentId], references: [id])
+  scheduledFor DateTime
+  status       ScheduleStatus   @default(PENDING)
+  platform     String
+  isRecurring  Boolean          @default(false)
+  createdAt    DateTime         @default(now())
+}
+
+enum ScheduleStatus {
+  PENDING
+  SENT
+  FAILED
+  CANCELLED
+}

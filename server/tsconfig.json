@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Base Options */
+    "target": "ES2022",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "lib": ["ES2022"],
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true,
+    
+    /* Import Handling */
+    "esModuleInterop": true, 
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+
+    /* REQUIRED FOR TS 6.0+ */
+    "ignoreDeprecations": "5.0" 
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
