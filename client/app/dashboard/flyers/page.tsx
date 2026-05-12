@@ -182,7 +182,7 @@ export default function FlyerPage() {
               >
                 {/* 2. Added key attributes to stop the Yellow warnings and Referrer errors */}
               <img 
-  src={flyer.imageUrl} 
+  src={flyer?.imageUrl || ""} 
   alt="AI Flyer" 
   className="w-full h-full object-cover" 
 />

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { createFlyer } from '../ai/image-engine';
 import { prisma } from '../lib/prisma';
 
-export const generateFlyer = async (req: any, res: Response) => {
+export const generate = async (req: any, res: Response) => {
   const { topic, intent, emotion } = req.body;
 
   try {
