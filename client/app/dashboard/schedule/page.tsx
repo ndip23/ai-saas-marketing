@@ -59,7 +59,7 @@ export default function PipelinePage() {
         </div>
         <Button 
           onClick={() => setIsModalOpen(true)}
-          className="rounded-full bg-blue-600 hover:bg-blue-700 text-white gap-2 h-14 px-8 shadow-lg shadow-blue-500/20"
+          className="rounded-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white gap-2 h-14 px-8 shadow-lg shadow-blue-500/20"
         >
           <Plus size={20} /> Schedule Post
         </Button>

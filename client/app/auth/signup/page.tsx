@@ -9,14 +9,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import api from "@/lib/api-client";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles, Eye, EyeOff } from "lucide-react";
 
 export default function SignupPage() {
   // 1. Form State
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
 
   // 2. Hooks
   const router = useRouter();
@@ -38,19 +40,19 @@ export default function SignupPage() {
 
     try {
       // API call to backend signup endpoint
-      const response = await api.post("/auth/signup", { 
-        name, 
-        email, 
-        password 
+      const response = await api.post("/auth/signup", {
+        name,
+        email,
+        password
       });
-      
+
       const { token, data } = response.data;
-      
+
       // Save user to Zustand and localStorage
       setAuth(data.user, token);
-      
+
       toast.success("Account created successfully!");
-      
+
       // Redirect to onboarding to setup their business identity
       setTimeout(() => {
         router.push("/onboarding");
@@ -67,7 +69,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] dark:bg-black p-4 selection:bg-blue-500 selection:text-white">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -86,8 +88,8 @@ export default function SignupPage() {
         <form onSubmit={handleSignup} className="space-y-4">
           <div className="space-y-2">
             <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 ml-1">Full Name</label>
-            <Input 
-              placeholder="John Doe" 
+            <Input
+              placeholder="John Doe"
               className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -97,9 +99,9 @@ export default function SignupPage() {
 
           <div className="space-y-2">
             <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 ml-1">Email Address</label>
-            <Input 
-              type="email" 
-              placeholder="john@example.com" 
+            <Input
+              type="email"
+              placeholder="john@example.com"
               className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -108,24 +110,38 @@ export default function SignupPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 ml-1">Password</label>
-            <Input 
-              type="password" 
-              placeholder="Min. 6 characters" 
-              className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="flex justify-between items-center px-1">
+              <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Password</label>
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="text-[10px] cursor-pointer font-bold text-blue-600 uppercase tracking-widest hover:opacity-70 transition-opacity"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            <div className="relative group">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 pr-12"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none group-focus-within:text-blue-500 transition-colors">
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </div>
+            </div>
           </div>
-          
-          <Button 
+
+          <Button
             type="submit"
             disabled={loading}
-            className="w-full h-14 rounded-2xl bg-black dark:bg-white text-white dark:text-black font-semibold text-lg hover:opacity-90 transition-all shadow-lg active:scale-[0.98] mt-4"
+            className="w-full h-14 cursor-pointer rounded-2xl bg-black dark:bg-white text-white dark:text-black font-semibold text-lg hover:opacity-90 transition-all shadow-lg active:scale-[0.98] mt-4"
           >
             {loading ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <Loader2 className="animate-spin h-5 w-5" />
                 <span>Creating account...</span>
               </div>
@@ -137,7 +153,7 @@ export default function SignupPage() {
           <p className="text-center text-[11px] text-zinc-400 px-6">
             By clicking "Join AI Marketer", you agree to our Terms of Service and Privacy Policy.
           </p>
-          
+
           <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800">
             <p className="text-center text-sm text-zinc-500">
               Already have an account? <Link href="/auth/login" className="text-blue-600 font-semibold hover:underline underline-offset-4">Log in</Link>

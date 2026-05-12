@@ -60,7 +60,7 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "group relative flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300",
+                "group relative flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300 cursor-pointer",
                 isActive 
                   ? "text-blue-600" 
                   : "text-zinc-500 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100/50 dark:hover:bg-zinc-900/50"
@@ -99,7 +99,7 @@ export function Sidebar() {
         <Link 
           href="/dashboard/settings" 
           className={cn(
-            "flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold transition-all",
+            "flex items-center gap-3 cursor-pointer px-4 py-3 rounded-2xl text-sm font-semibold transition-all",
             pathname === "/dashboard/settings" ? "text-blue-600" : "text-zinc-500 hover:text-black hover:bg-zinc-100/50"
           )}
         >
@@ -109,7 +109,7 @@ export function Sidebar() {
         
         <button 
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-zinc-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all group"
+          className="flex w-full items-center cursor-pointer gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-zinc-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all group"
         >
           <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
           <span>Logout</span>

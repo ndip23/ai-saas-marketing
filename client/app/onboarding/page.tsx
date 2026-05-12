@@ -117,7 +117,7 @@ export default function Onboarding() {
               <Button 
                 onClick={() => setStep(2)} 
                 disabled={!formData.name || !formData.industry}
-                className="w-full h-16 rounded-2xl bg-black dark:bg-white text-white dark:text-black text-lg font-semibold group"
+                className="w-full h-16 cursor-pointer rounded-2xl bg-black dark:bg-white text-white dark:text-black text-lg font-semibold group"
               >
                 Next Step <Briefcase className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
               </Button>
@@ -169,14 +169,14 @@ export default function Onboarding() {
                 <Button 
                   variant="ghost" 
                   onClick={() => setStep(1)} 
-                  className="h-16 px-8 rounded-2xl font-semibold"
+                  className="h-16 px-8 rounded-2xl font-semibold cursor-pointer"
                 >
                   Back
                 </Button>
                 <Button 
                   onClick={handleFinalize} 
                   disabled={loading}
-                  className="flex-1 h-16 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold shadow-xl shadow-blue-500/20 active:scale-[0.98] transition-all"
+                  className="flex-1 h-16 cursor-pointer rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold shadow-xl shadow-blue-500/20 active:scale-[0.98] transition-all"
                 >
                   {loading ? (
                     <div className="flex items-center gap-2">

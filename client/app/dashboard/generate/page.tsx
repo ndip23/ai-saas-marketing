@@ -69,20 +69,20 @@ function GeneratorContent() {
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-12">
         
         {/* Header Section */}
-        <div className="space-y-4 text-center">
+        <div className="space-y-4 text-center cursor-pointer">
           <h1 className="text-5xl font-bold tracking-tighter">Content Lab</h1>
           <p className="text-zinc-500 text-lg max-w-lg mx-auto">Select your platform and let Gemini AI craft your message.</p>
         </div>
 
         {/* Configuration Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-zinc-900 p-2 rounded-[2.5rem] border border-zinc-200 dark:border-zinc-800 shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-zinc-900 p-2 rounded-[2.5rem]  border border-zinc-200 dark:border-zinc-800 shadow-sm">
            {/* Platform Selector */}
-           <div className="flex p-1 bg-zinc-100 dark:bg-black rounded-[2rem] gap-1">
+           <div className="flex p-1 bg-zinc-100 dark:bg-black rounded-[2rem] gap-1 cursor-pointer">
               {["Instagram", "Facebook", "WhatsApp", "X"].map((p) => (
                 <button
                   key={p}
                   onClick={() => setPlatform(p)}
-                  className={`flex-1 py-3 text-xs font-bold uppercase tracking-widest rounded-full transition-all ${
+                  className={`flex-1 py-3 text-xs  cursor-pointer font-bold uppercase tracking-widest rounded-full transition-all ${
                     platform === p ? "bg-white dark:bg-zinc-800 text-blue-600 shadow-sm" : "text-zinc-400 hover:text-zinc-600"
                   }`}
                 >
@@ -92,7 +92,7 @@ function GeneratorContent() {
            </div>
 
            {/* Mode Selector */}
-           <div className="flex p-1 bg-zinc-100 dark:bg-black rounded-[2rem] gap-1">
+           <div className="flex p-1 bg-zinc-100 dark:bg-black rounded-[2rem] gap-1 cursor-pointer">
               {[
                 { id: "PROBLEM", label: "Problem", icon: Target },
                 { id: "AUTHORITY", label: "Authority", icon: Megaphone },
@@ -101,7 +101,7 @@ function GeneratorContent() {
                 <button
                   key={m.id}
                   onClick={() => setMode(m.id)}
-                  className={`flex-1 py-3 text-[10px] font-bold uppercase tracking-widest rounded-full flex items-center justify-center gap-2 transition-all ${
+                  className={`flex-1 py-3 text-[10px]  cursor-pointer font-bold uppercase tracking-widest rounded-full flex items-center justify-center gap-2 transition-all ${
                     mode === m.id ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm" : "text-zinc-400"
                   }`}
                 >
@@ -125,7 +125,7 @@ function GeneratorContent() {
           <Button 
             onClick={handleGenerate}
             disabled={loading || !topic}
-            className="rounded-full px-16 h-16 bg-black dark:bg-white text-white dark:text-black hover:scale-105 transition-all text-lg font-bold shadow-2xl shadow-blue-500/10"
+            className="rounded-full cursor-pointer px-16 h-16 bg-black dark:bg-white text-white dark:text-black hover:scale-105 transition-all text-lg font-bold shadow-2xl shadow-blue-500/10"
           >
             {loading ? (
               <div className="flex items-center gap-3">
@@ -182,7 +182,7 @@ function GeneratorContent() {
                   <Button 
                     variant="ghost" 
                     onClick={copyToClipboard} 
-                    className="rounded-2xl h-16 w-16 bg-zinc-50 dark:bg-zinc-800 hover:bg-blue-600 hover:text-white transition-all shadow-inner"
+                    className="rounded-2xl h-16 w-16 cursor-pointer bg-zinc-50 dark:bg-zinc-800 hover:bg-blue-600 hover:text-white transition-all shadow-inner"
                   >
                     {copied ? <Check className="text-green-500" /> : <Copy size={24} />}
                   </Button>

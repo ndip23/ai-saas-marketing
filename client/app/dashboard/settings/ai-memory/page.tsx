@@ -66,7 +66,7 @@ export default function AIDNAPage() {
                 <button
                   key={t}
                   onClick={() => setDna({...dna, preferredTone: t})}
-                  className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all ${
+                  className={`px-6 py-3 rounded-2xl cursor-pointer text-sm font-bold transition-all ${
                     dna.preferredTone === t ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500"
                   }`}
                 >
@@ -93,7 +93,7 @@ export default function AIDNAPage() {
           <Button 
             onClick={handleSave} 
             disabled={saving}
-            className="w-full h-16 rounded-[2rem] bg-black dark:bg-white text-white dark:text-black text-xl font-bold gap-3"
+            className="w-full h-16 cursor-pointer rounded-[2rem] bg-black dark:bg-white text-white dark:text-black text-xl font-bold gap-3"
           >
             {saving ? <Loader2 className="animate-spin" /> : <><Save size={20} /> Sync Personality</>}
           </Button>

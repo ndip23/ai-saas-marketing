@@ -18,7 +18,7 @@ export default function LandingPage() {
             <Button variant="ghost" className="rounded-full px-6">Login</Button>
           </Link>
           <Link href="/auth/signup">
-            <Button className="rounded-full px-6 bg-black dark:bg-white text-white dark:text-black">Get Started</Button>
+            <Button className="rounded-full px-6 bg-black dark:bg-white text-white dark:text-black cursor-pointer">Get Started</Button>
           </Link>
         </div>
       </nav>
@@ -45,7 +45,7 @@ export default function LandingPage() {
 
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <Link href="/auth/signup">
-              <Button size="lg" className="rounded-full px-10 h-16 text-lg bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-xl shadow-blue-500/20">
+              <Button size="lg" className="rounded-full cursor-pointer px-10 h-16 text-lg bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-xl shadow-blue-500/20">
                 Start Generating Free <ArrowRight size={20} />
               </Button>
             </Link>

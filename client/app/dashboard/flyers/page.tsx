@@ -100,7 +100,7 @@ export default function FlyerPage() {
                     key={opt}
                     type="button"
                     onClick={() => setIntent(opt)}
-                    className={`px-6 py-3 rounded-2xl text-sm font-semibold transition-all active:scale-95 ${
+                    className={`px-6 py-3 rounded-2xl cursor-pointer text-sm font-semibold transition-all active:scale-95 ${
                       intent === opt 
                       ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20" 
                       : "bg-white dark:bg-zinc-900 text-zinc-500 border border-zinc-200 dark:border-zinc-800 hover:border-blue-400"
@@ -125,7 +125,7 @@ export default function FlyerPage() {
             <Button 
               onClick={handleGenerate}
               disabled={loading || !topic}
-              className="w-full h-16 rounded-[2rem] bg-black dark:bg-white text-white dark:text-black text-xl font-bold gap-3 shadow-xl hover:opacity-90 active:scale-[0.98]"
+              className="w-full h-16 cursor-pointer rounded-[2rem] bg-black dark:bg-white text-white dark:text-black text-xl font-bold gap-3 shadow-xl hover:opacity-90 active:scale-[0.98]"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -187,7 +187,7 @@ export default function FlyerPage() {
   className="w-full h-full object-cover" 
 />
                 
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 backdrop-blur-sm">
+                <div className="absolute inset-0 cursor-pointer bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center gap-6 backdrop-blur-sm">
                   <div className="bg-white/20 p-4 rounded-full backdrop-blur-md">
                     <CheckCircle2 size={48} className="text-white" />
                   </div>

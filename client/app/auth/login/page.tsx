@@ -9,47 +9,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import api from "@/lib/api-client";
 import { useAuthStore } from "@/store/useAuthStore";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
-  // 1. State for form inputs
+  // 1. State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // 2. Hooks for navigation and global auth state
+  // 2. Hooks
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  // 3. Handle Login Logic
+  // 3. Logic
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!email || !password) {
-      return toast.error("Please fill in all fields");
-    }
+    if (!email || !password) return toast.error("Please fill in all fields");
 
     setLoading(true);
-
     try {
-      // API call to our backend
       const response = await api.post("/auth/login", { email, password });
-      
       const { token, data } = response.data;
       
-      // Save user and token to Zustand (which persists to localStorage)
       setAuth(data.user, token);
-      
       toast.success(`Welcome back, ${data.user.name}!`);
       
-      // Redirect to dashboard after short delay for better UX
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
 
     } catch (error: any) {
-      console.error("Login error:", error);
-      const message = error.response?.data?.message || "Invalid email or password";
+      const message = error.response?.data?.message || "Invalid credentials";
       toast.error(message);
     } finally {
       setLoading(false);
@@ -57,25 +48,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] dark:bg-black p-4 selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] dark:bg-black p-4 selection:bg-blue-500">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-md p-10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl border border-white dark:border-zinc-800 rounded-[2.5rem] shadow-2xl shadow-zinc-200/50 dark:shadow-none"
+        className="w-full max-w-md p-10 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-2xl border border-white dark:border-zinc-800 rounded-[2.5rem] shadow-2xl"
       >
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Welcome Back</h1>
           <p className="text-zinc-500 mt-2 text-sm">Log in to manage your AI marketing.</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-2">
             <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 ml-1">Email Address</label>
             <Input 
               type="email" 
               placeholder="name@company.com" 
-              className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all"
+              className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -83,21 +74,35 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 ml-1">Password</label>
-            <Input 
-              type="password" 
-              placeholder="••••••••" 
-              className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-all"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="flex justify-between items-center px-1">
+                <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Password</label>
+                <button 
+                  type="button" 
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-[10px] cursor-pointer font-bold text-blue-600 uppercase tracking-widest hover:opacity-70 transition-opacity"
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+            </div>
+            <div className="relative group">
+                <Input 
+                  type={showPassword ? "text" : "password"} 
+                  placeholder="••••••••" 
+                  className="h-14 rounded-2xl bg-zinc-100/50 border-none focus-visible:ring-2 focus-visible:ring-blue-500 pr-12"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none group-focus-within:text-blue-500 transition-colors">
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </div>
+            </div>
           </div>
 
           <Button 
             type="submit" 
             disabled={loading}
-            className="w-full h-14 rounded-2xl bg-black dark:bg-white text-white dark:text-black font-semibold text-lg hover:opacity-90 transition-all shadow-lg active:scale-[0.98] disabled:opacity-70 mt-4"
+            className="w-full h-14 cursor-pointer rounded-2xl bg-black dark:bg-white text-white dark:text-black font-bold text-lg hover:opacity-90 transition-all shadow-xl active:scale-[0.98] mt-4"
           >
             {loading ? (
               <div className="flex items-center gap-2">
@@ -108,13 +113,13 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <div className="relative my-8">
+        <div className="relative my-10">
           <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-zinc-100 dark:border-zinc-800" /></div>
-          <div className="relative flex justify-center text-xs uppercase"><span className="bg-white dark:bg-zinc-900 px-4 text-zinc-400 font-medium tracking-widest">Help</span></div>
+          <div className="relative flex justify-center text-[10px] uppercase tracking-[0.3em]"><span className="bg-white dark:bg-zinc-900 px-4 text-zinc-400 font-bold">Secure Access</span></div>
         </div>
 
-        <p className="text-center text-sm text-zinc-500">
-          Don't have an account? <Link href="/auth/signup" className="text-blue-600 font-semibold hover:underline underline-offset-4">Create one</Link>
+        <p className="text-center text-sm text-zinc-500 font-medium">
+          Don't have an account? <Link href="/auth/signup" className="text-blue-600 font-bold hover:underline underline-offset-4">Create one</Link>
         </p>
       </motion.div>
     </div>
